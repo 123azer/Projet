@@ -8,18 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 @Entity
 public class Avis implements Serializable {
 	@Id 	@GeneratedValue
 	private Long idAvis;
 	private String message;
+	 
 	@JoinColumn(referencedColumnName = "idSondage")
-	@ManyToOne(optional = false)
+	@ManyToOne
+	@JsonIgnore
 	protected Sondage sondage;
-	@JoinColumn(referencedColumnName = "idResultat")
-	@ManyToOne(optional = false)
-	protected Resultat resultat;
-	
+
 	
 	
 	public Avis() {
@@ -38,6 +41,14 @@ public class Avis implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Sondage getSondage() {
+		return sondage;
+	}
+
+	public void setSondage(Sondage sondage) {
+		this.sondage = sondage;
 	}
 	
 	

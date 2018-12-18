@@ -20,37 +20,37 @@ public class UtilisateurRestService {
 @Autowired
 private UtilisateurRepository utilisateurRepository;
 
-@RequestMapping(value="/contact",method=RequestMethod.GET)
+@RequestMapping(value="/user",method=RequestMethod.GET)
 public List <Utilisateur> getContact(){
 	return utilisateurRepository.findAll();
 }
 
-@RequestMapping(value="/contact/{id}",method=RequestMethod.GET)
+@RequestMapping(value="/user/{id}",method=RequestMethod.GET)
 public Utilisateur getContact(@PathVariable Long id){
-	return utilisateurRepository.findOne(id);
+	return utilisateurRepository.getOne(id);
 }
 
-@RequestMapping(value="/contact",method=RequestMethod.POST)
-public Utilisateur save(@RequestBody Utilisateur contact){
-	return utilisateurRepository.save(contact);
+@RequestMapping(value="/user",method=RequestMethod.POST)
+public Utilisateur save(@RequestBody Utilisateur user){
+	return utilisateurRepository.save(user);
 }
 
-@RequestMapping(value="/contact/{id}",method=RequestMethod.DELETE)
+@RequestMapping(value="/user/{id}",method=RequestMethod.DELETE)
 public boolean supprimer(@PathVariable Long id){
-	utilisateurRepository.delete(id);
+	utilisateurRepository.deleteById(id);
 	 return true;
 }
 
-@RequestMapping(value="/contact/{id}",method=RequestMethod.PUT)
-public Utilisateur save(@PathVariable Long id,@RequestBody Utilisateur contact){
+@RequestMapping(value="/user/{id}",method=RequestMethod.PUT)
+public Utilisateur save(@PathVariable Long id,@RequestBody Utilisateur user){
 	//Contact c = contactRepository.findOne(id);
 	//if(contact.getPhoto()==null)
 	//	contact.setPhoto(c.getPhoto());
-	contact.setId(id);
-	return utilisateurRepository.save(contact);
+	user.setId(id);
+	return utilisateurRepository.save(user);
 }
 
-@RequestMapping(value="/cherchercontact",method=RequestMethod.GET)
+@RequestMapping(value="/chercheruser",method=RequestMethod.GET)
 public Page<Utilisateur>  getContact(@RequestParam(name = "mc",defaultValue="")String mc
 		,@RequestParam(name = "page",defaultValue="0")int page,
 		@RequestParam(name = "size",defaultValue="5")int size){

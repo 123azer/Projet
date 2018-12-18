@@ -7,14 +7,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
+@Entity 
+//@Inheritance(strategy=InheritanceType.JOINED)
+//@DiscriminatorColumn(name="Observe")
 public class Utilisateur implements Serializable{
 	@Id 	@GeneratedValue
 	private Long idUser; 
@@ -26,8 +31,8 @@ public class Utilisateur implements Serializable{
     private String email;
     private Long tel;
     private String photo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
-    private List <Categorie> categories;
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+   private List <Categorie> categories;
     
     
 	public Utilisateur() {
@@ -86,12 +91,12 @@ public class Utilisateur implements Serializable{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	/*public List<Categorie> getCategories() {
+	public List<Categorie> getCategories() {
 		return categories;
 	}
 	public void setCategories(List<Categorie> categories) {
 		this.categories = categories;
-	}*/
+	}
 	@Override
 	public String toString() {
 		return "Contact [id=" + idUser + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance

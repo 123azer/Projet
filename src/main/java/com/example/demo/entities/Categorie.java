@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Categorie implements Serializable {
 	@Id 	@GeneratedValue
@@ -16,15 +19,29 @@ public class Categorie implements Serializable {
    private String nom;
    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorie")
    private List <Sondage> sondage;
+  
    @JoinColumn(referencedColumnName = "idUser")
-	@ManyToOne(optional = false)
-   protected Utilisateur utilisateur;
+	@ManyToOne
+	 @JsonIgnore
+  protected Utilisateur utilisateur;
    
    
 public Categorie() {
 	super();
 	// TODO Auto-generated constructor stub
 }
+
+
+
+public Categorie(String nom, List<Sondage> sondage, Utilisateur utilisateur) {
+	super();
+	this.nom = nom;
+	this.sondage = sondage;
+	this.utilisateur = utilisateur;
+}
+
+
+
 public String getNom() {
 	return nom;
 }
@@ -37,6 +54,26 @@ public List<Sondage> getSondage() {
 public void setSondage(List<Sondage> sondage) {
 	this.sondage = sondage;
 }
+public Long getIdCategorie() {
+	return idCategorie;
+}
+public void setIdCategorie(Long idCategorie) {
+	this.idCategorie = idCategorie;
+}
+
+
+
+public Utilisateur getUtilisateur() {
+	return utilisateur;
+}
+
+
+
+public void setUtilisateur(Utilisateur utilisateur) {
+	this.utilisateur = utilisateur;
+}
+
+
    
    
    

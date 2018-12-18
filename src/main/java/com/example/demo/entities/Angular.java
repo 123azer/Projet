@@ -1,31 +1,26 @@
 package com.example.demo.entities;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class Angular extends Utilisateur implements observable,Serializable {
-	@Id 	@GeneratedValue
-	private Long id; 
-	@Transient
-	private List <observateur> observateurs;
-	
-	
+public class Angular extends observable implements Serializable {
+ 
 	
 	public Angular() {
 		super();
 	}
 
-	public Angular(String nom, String prenom, Date dateNaissance, String email, Long tel, String photo) {
-		super(nom, prenom, dateNaissance, email, tel, photo);
-		// TODO Auto-generated constructor stub
-	}
 
 	public void ajouterSondage(Sondage sondage) {
 		// le 1 er element il faut id la cat
@@ -38,9 +33,6 @@ public class Angular extends Utilisateur implements observable,Serializable {
 		//this.getCategories().get(0).getSondage().remove(sondage);
 		notifierObservateurs();
 	}
-
-
-
 	@Override
 	public void ajouterObservateur(observateur obj) {
 		observateurs.add(obj);

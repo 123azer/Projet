@@ -14,21 +14,33 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 @Entity
-public class Sondage implements observableS,Serializable {
+public class Sondage implements Serializable {
 	@Id 	@GeneratedValue
 	private Long idSondage;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sondage")
 	private List <Avis> avis;
-	@Transient
-	private List <observateurS> observateurs;
+	 
 	@JoinColumn(referencedColumnName = "idCategorie")
-	@ManyToOne(optional = false)
+	@ManyToOne
+	@JsonIgnore
 	protected Categorie categorie;
 	
 	
 	
 	
+	
+	public Sondage(List<Avis> avis, Categorie categorie) {
+		super();
+		this.avis = avis;
+		this.categorie = categorie;
+	}
+
 	public List<Avis> getAvis() {
 		return avis;
 	}
@@ -39,37 +51,29 @@ public class Sondage implements observableS,Serializable {
 	
 	public void ajouterAvis(Avis avis) {
 		this.avis.add(avis);
-		notifierObservateurs();
+	
 	}
 	
 	public void supprimerAvis(Avis avis) {
 		this.avis.remove(avis);
-		notifierObservateurs();
+	
 	}
 	
 
 	public Sondage() {
-		this.observateurs=new ArrayList<>();
+		
 		this.avis=new ArrayList<>();
 	}
 
-	@Override
-	public void ajouterObservateur(observateurS obj) {
-		observateurs.add(obj);
+	public Categorie getCategorie() {
+		return categorie;
 	}
 
-	@Override
-	public void supprimerObservateur(observateurS obj) {
-		observateurs.remove(obj);
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 
-	@Override
-	public void notifierObservateurs() {
-		for (observateurS obj : observateurs) {
-			obj.actualiser(this);
-		}
-		
-	}
+	
 	
 
 }
